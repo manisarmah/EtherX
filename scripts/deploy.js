@@ -4,7 +4,9 @@
 // When running the script with `npx hardhat run <script>` you'll find the Hardhat
 // Runtime Environment's members available in the global scope.
 const hre = require("hardhat");
-
+const { network } = require("hardhat");
+const developmentChains = ["hardhat", "localhost"];
+const { verify } = require("../utils/verify");
 async function main() {
   // Hardhat always runs the compile task when running scripts with its command
   // line interface.
@@ -14,12 +16,18 @@ async function main() {
   // await hre.run('compile');
 
   // We get the contract to deploy
-  const Greeter = await hre.ethers.getContractFactory("Greeter");
-  const greeter = await Greeter.deploy("Hello world!");
+  const CrowdFunding = await hre.ethers.getContractFactory("CrowdFunding");
+  const crowdFunding = await CrowdFunding.deploy();
+  await crowdFunding.deployTransaction.wait(6);
+  await crowdFunding.deployed();
 
-  await greeter.deployed();
-
-  console.log("Greeter deployed to:", greeter.address);
+  console.log("CrowdFunding deployed to:", crowdFunding.address);
+  if (
+    !developmentChains.includes(network.name) &&
+    process.env.ETHERSCAN_API_KEY
+  ) {
+    await verify(crowdFunding.address, []);
+  }
 }
 
 // We recommend this pattern to be able to use async/await everywhere
