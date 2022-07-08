@@ -1,29 +1,13 @@
 /* eslint-disable @next/next/link-passhref */
 import styles from "../styles/home.module.css";
-import { useRouter } from "next/router";
 import logo from "../public/logo.png";
 import Image from "next/image";
 import { useMoralis } from "react-moralis";
-
-export default function Home() {
+import Link from "next/link";
+const ADMIN = "0x2Cd4cdb8D4e7d1CFC6468f82A4e54141947384E7";
+export default function Welcome() {
   const { authenticate, authError, isAuthenticated, user, logout } =
     useMoralis();
-  const router = useRouter();
-  const handleClickInvestor = (e) => {
-    e.preventDefault();
-    if (!isAuthenticated) alert("Please connect wallet first!");
-    else router.push("/investor");
-  };
-  const handleClickAsker = (e) => {
-    e.preventDefault();
-    if (!isAuthenticated) alert("Please connect wallet first!");
-    else router.push("/asker");
-  };
-  const handleAdmin = (e) => {
-    e.preventDefault();
-    if (isAuthenticated) logout();
-    else router.push("/admin");
-  };
   // if (authError) alert(`${authError.name} ${authError.message}`);
   return (
     <>
@@ -61,7 +45,7 @@ export default function Home() {
             <button
               id="admin"
               className={styles.adminBtn}
-              onClick={handleAdmin}
+              onClick={isAuthenticated ? logout : authenticate}
             >
               {!isAuthenticated ? "Admin" : "Logout"}
             </button>
@@ -74,10 +58,10 @@ export default function Home() {
         </div>
         <div className={styles.choose_profile}>
           <div className={styles.profile_investor}>
-            <a onClick={handleClickInvestor}>I want to invest ...</a>
+            <a>I want to invest ...</a>
           </div>
           <div className={styles.profile_asker}>
-            <a onClick={handleClickAsker}>I want funding ...</a>
+            <a>I want funding ...</a>{" "}
           </div>
         </div>
       </div>
