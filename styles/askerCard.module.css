@@ -1,0 +1,84 @@
+.cardWrapper{
+    width: 350px;
+    height: auto;
+    border:1px solid rgb(161, 156, 156);
+    padding: 0.5rem;
+    margin: 1rem;
+    border-radius: 16px;
+}
+.cardWrapperGreen{
+    width: 350px;
+    height: auto;
+    border:2px solid rgb(40, 224, 71);
+    padding: 0.5rem;
+    margin: 1rem;
+    border-radius: 16px;
+}
+.cardWrapper2{
+    width: 100%;
+    height: 100%;
+    border: 1px dashed black;
+    background: rgb(153,148,231);
+/* From https://css.glass */
+background: rgba(255, 255, 255, 0.2);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5px);
+-webkit-backdrop-filter: blur(5px);
+border: 1px solid rgba(255, 255, 255, 0.3);
+font-family: sans-serif;
+padding: 0.5rem;
+}
+.lessTimeLeft{
+    color:red;
+}
+.timeLeft{
+    color:green;
+}
+.cardWrapper2 span{
+    color:rgb(48, 26, 26);
+    font-size: 1.05rem;
+    font-style: italic;
+    font-weight: bold;
+}
+.buttonWrapper{
+    width: 100%;
+    display: flex;
+    /* justify-content: space-evenly; */
+    margin-top: 1rem;
+}
+.buttonWrapper input{
+    border: 1px solid black;
+    padding: 0.3rem 0.5rem;
+    width: 150px;
+    margin-right: 1rem;
+    outline: none;
+    border-radius:0.2rem ;
+    background-color: rgb(241, 237, 237);
+}
+.buttonWrapper .buttonFund{
+    outline:none;
+    background-color: rgb(59, 145, 231);
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.2rem;
+    color:rgb(247, 234, 234);
+    font-family: sans-serif;
+}
+.buttonWrapper .buttonExpired{
+    background-color: grey;
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.2rem;
+    color:rgb(247, 234, 234);
+    font-family: sans-serif;
+    outline:none;
+    cursor: not-allowed;
+}
+.buttonVote{
+    outline:none;
+    background-color: rgb(188, 59, 231);
+    padding: 0.3rem 0.5rem;
+    border-radius: 0.2rem;
+    color:rgb(247, 234, 234);
+    font-family: sans-serif;
+    margin-left: 1rem;
+}

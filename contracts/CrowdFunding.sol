@@ -67,17 +67,13 @@ contract CrowdFunding {
         );
         _;
     }
-    struct Request {
-        address payable recipientNew;
-        uint256 value;
-        uint256 totalRaisedAmount;
-        bool completed;
-        uint256 noOfVoters;
-        mapping(address => bool) voters;
-    }
-    mapping(uint256 => Request) public requests;
 
+    modifier onlyManager() {
+        require(msg.sender == manager, "Only manager can call this function");
+        _;
+    }
     struct Asker {
+        string description;
         address payable recipient;
         uint256 target;
         uint256 deadline;
@@ -86,9 +82,11 @@ contract CrowdFunding {
         uint256 percent;
     }
     mapping(uint256 => Asker) public askers;
+    Asker[] public arrayOfAsker;
     uint256 public noOfAskers;
 
     function createFundRequest(
+        string memory _description,
         uint256 _target,
         uint256 _deadline,
         uint256 _percent,
@@ -96,17 +94,24 @@ contract CrowdFunding {
     ) public {
         Asker storage newAsker = askers[noOfAskers];
         noOfAskers++;
+        newAsker.description = _description;
         newAsker.recipient = payable(msg.sender);
         newAsker.target = _target;
         newAsker.percent = _percent;
-        newAsker.deadline = _deadline + block.timestamp;
+        newAsker.deadline = _deadline * 24 * 60 * 60 + block.timestamp;
         newAsker.acceptIfLessThanTarget = _acceptIfLessThanTarget;
         newAsker.contributorsAddress = new address[](0);
+        // fundRequests.push(newAsker);
+        arrayOfAsker.push(newAsker);
+    }
+
+    function getFundRequest() public view returns (Asker[] memory) {
+        return arrayOfAsker;
     }
 
     constructor() {
         minimumContribution = 100;
-        manager = msg.sender;
+        manager = 0x3D634232a5663ca5a5927b25Da2fBC0c07450cA3;
         dummyAccount = payable(_dummyAccount);
     }
 
@@ -156,68 +161,18 @@ contract CrowdFunding {
         }
     }
 
-    modifier onlyManager() {
-        require(msg.sender == manager, "Only manager can call this function");
-        _;
-    }
-    uint256 numRequests;
-    mapping(uint256 => bool) indexToCheck;
-    mapping(uint256 => uint256) indexToNumRequests;
-
-    function createRequests(uint256 _index) public onlyManager {
-        // require(block.timestamp >= askers[_index].deadline,"Time left!!");
-        require(!indexToCheck[_index], "Already created a request!");
-        indexToNumRequests[_index] = numRequests;
-        Request storage newRequest = requests[numRequests];
-        numRequests++;
-        indexToCheck[_index] = true;
-        newRequest.recipientNew = askers[_index].recipient;
-        newRequest.totalRaisedAmount = raisedAmount[_index];
-        newRequest.value = askers[_index].target;
-        newRequest.completed = false;
-        newRequest.noOfVoters = 0;
-    }
-
-    function voteRequest(uint _index) public {
-        mapping(address => uint256)
-            storage temp = askerIdxToContributorToAmount[_index];
-        require(temp[msg.sender] > 0, "You must be contributor");
-        Request storage thisRequest = requests[indexToNumRequests[_index]];
-        require(
-            thisRequest.voters[msg.sender] == false,
-            "You have already voted"
-        );
-        thisRequest.voters[msg.sender] = true;
-        thisRequest.noOfVoters++;
-    }
-
-    function makePayment(uint _index) public onlyManager {
-        Request storage thisRequest = requests[indexToNumRequests[_index]];
-        require(
-            thisRequest.completed == false,
-            "The request has been completed"
-        );
+    function makePayment(uint _index) public {
         require(
             block.timestamp > askers[_index].deadline,
             "Abhi time baki hai! Ruko thoda! "
         );
         if (raisedAmount[_index] >= askers[_index].target) {
-            thisRequest.recipientNew.transfer(thisRequest.totalRaisedAmount);
-            thisRequest.completed = true;
+            askers[_index].recipient.transfer(raisedAmount[_index]);
         } else {
             if (askers[_index].acceptIfLessThanTarget) {
-                if (thisRequest.noOfVoters > noOfContributors[_index] / 2) {
-                    thisRequest.recipientNew.transfer(
-                        thisRequest.totalRaisedAmount
-                    );
-                    thisRequest.completed = true;
-                } else {
-                    refund(_index);
-                    thisRequest.completed = true;
-                }
+                askers[_index].recipient.transfer(raisedAmount[_index]);
             } else {
                 refund(_index);
-                thisRequest.completed = true;
             }
         }
     }

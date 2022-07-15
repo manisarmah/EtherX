@@ -1,0 +1,21 @@
+.allCards{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+    flex-wrap: wrap;
+    background-color: rgb(221, 211, 226);
+}
+.heading{
+    width: 100%;
+    height: auto;
+    background: linear-gradient(90deg, rgba(6, 45, 128, 0.74) 0%, rgb(78, 78, 216) 23%, rgba(7, 142, 169, 0.831) 100%);
+    text-align: center;
+    padding: 0.5rem;
+    color:white;
+}
+.heading h2{
+    font-family: sans-serif;
+    font-weight: bold;
+    font-size: 1.2rem;
+}

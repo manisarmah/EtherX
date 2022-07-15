@@ -1,5 +1,5 @@
 import "../styles/globals.css";
-import { MoralisProvider } from "react-moralis";
+import { MoralisProvider, useMoralis } from "react-moralis";
 function MyApp({ Component, pageProps }) {
   return (
     <MoralisProvider

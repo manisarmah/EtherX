@@ -1,0 +1,115 @@
+.bodyClass{
+    width: 100%;
+    height: 100%;
+    /* background-color: blue; */
+}
+.boxWrapper{
+    height: 100vh;
+    width:65%;
+    background: rgb(2,0,36);
+background: linear-gradient(90deg, rgba(6, 45, 128, 0.74) 0%, rgb(78, 78, 216) 23%, rgba(7, 142, 169, 0.831) 100%);
+    display: flex;
+    justify-content: center;
+    align-items:center;
+    flex-direction: column;
+    border-radius: 8px;
+    padding: 2rem;
+}
+.bodyClass .askerDetails{
+   width: 100%;
+  
+    padding-top: 1.5rem;
+    text-align: center;
+}
+.marquee{
+    color:rgba(110, 180, 5, 0.769);
+    margin-bottom: 0.5rem;
+}
+.bodyClass .askerDetails .connectedWallet{
+    font-size: 1.1rem;
+    font-family: sans-serif;
+    font-style: italic;
+    font-weight: 600;
+    color:rgb(72, 70, 70);
+    margin-top: 0.8rem;
+}
+.bodyClass .askerDetailsMaster{
+    width: 35%;
+    height: 100%;
+    /* background: linear-gradient(90deg,rgba(0,212,255,1)  0%, rgba(9,9,121,1) 73%, rgba(2,0,36,1) 100%); */
+    background-color: rgb(248, 211, 162);
+    
+    border-radius: 8px;
+}
+.bodyClass .askerDetailsMaster .backBtn{
+    margin:1rem 0 0.5rem 1.5rem;
+    width: 120px;
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s all; 
+}
+.bodyClass .askerDetailsMaster .backBtn:hover{
+    cursor: pointer;
+    transform: scale(1.02);
+    transition: cubic-bezier(0.175, 0.885, 0.32, 1.275) 0.3s all; 
+}
+.boxWrapper textarea{
+    resize: none;
+    width: 90%;
+    background-color: rgba(230, 220, 220, 0.84);
+    border-radius: 0.2rem;
+    padding: 0.3rem;
+    outline: none;
+}
+.boxWrapper input{
+    background-color: rgba(230, 220, 220, 0.838);
+    border-radius: 0.2rem;
+    padding: 0.5rem;
+    outline: none;
+    width: 90%;
+}
+.boxWrapper input::placeholder{
+    color:rgb(132, 122, 122);
+    font-style: italic;
+}
+.boxWrapper textarea::placeholder{
+    color:rgb(132, 122, 122);
+    font-style: italic;
+}
+.dummy{
+    margin: 2vh 0;
+}
+.bodyClass{
+    height: 100vh;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.messageArea{
+    width: 85%;
+    display: block;
+    margin: auto;
+    margin-top: 3rem;
+background: rgba(255, 255, 255, 0.11);
+border-radius: 16px;
+box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+backdrop-filter: blur(5.6px);
+-webkit-backdrop-filter: blur(5.6px);
+border: 1px solid rgba(255, 255, 255, 0.67);
+padding: 1rem;
+}
+.messageArea h2{
+    font-size: 1.14rem;
+    font-weight: bold;
+    font-style: italic;
+    color:rgba(0, 0, 0, 0.833);
+}
+.messageArea span{
+    font-style:italic ;
+    font-size: 1.05rem;
+}
+.boxWrapper button{
+    background-color: rgb(248, 211, 162);
+    padding: 0.3rem 0.5rem;
+    border-radius: 1rem;
+    font-family: sans-serif;
+}
