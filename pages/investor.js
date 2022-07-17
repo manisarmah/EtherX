@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useState } from "react";
 import styles from "../styles/investor.module.css";
 // import router from "next/router";
@@ -66,16 +67,7 @@ export default function Investor() {
     }
     return dataArr;
   };
-  function getDate() {
-    var today = new Date();
-    var dd = String(today.getDate()).padStart(2, "0");
-    var mm = String(today.getMonth() + 1).padStart(2, "0");
-    var yyyy = today.getFullYear();
-    today = dd + "/" + mm + "/" + yyyy;
-    return today;
-  }
 
-  // console.log(ist);
   return (
     <div className={styles.masterInvestor}>
       <div className={styles.heading}>
