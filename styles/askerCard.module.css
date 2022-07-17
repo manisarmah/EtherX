@@ -72,13 +72,14 @@ padding: 0.5rem;
     font-family: sans-serif;
     outline:none;
     cursor: not-allowed;
+    margin-right: 1rem;
 }
-.buttonVote{
+.buttonWrapper .buttonMakePayment{
     outline:none;
     background-color: rgb(188, 59, 231);
     padding: 0.3rem 0.5rem;
     border-radius: 0.2rem;
     color:rgb(247, 234, 234);
     font-family: sans-serif;
-    margin-left: 1rem;
+   
 }

@@ -98,7 +98,7 @@ contract CrowdFunding {
         newAsker.recipient = payable(msg.sender);
         newAsker.target = _target;
         newAsker.percent = _percent;
-        newAsker.deadline = _deadline * 24 * 60 * 60 + block.timestamp;
+        newAsker.deadline = _deadline + block.timestamp;
         newAsker.acceptIfLessThanTarget = _acceptIfLessThanTarget;
         newAsker.contributorsAddress = new address[](0);
         // fundRequests.push(newAsker);
@@ -175,5 +175,6 @@ contract CrowdFunding {
                 refund(_index);
             }
         }
+        // paymentCompleted[_index] = true;
     }
 }

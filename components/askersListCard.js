@@ -1,14 +1,16 @@
 import styles from "../styles/askerCard.module.css";
 import Countdown from "react-countdown";
 import { useEffect, useState } from "react";
-import { ethers } from "ethers";
+import { ethers, providers } from "ethers";
 import CrowdFunding from "../src/artifacts/contracts/CrowdFunding.sol/CrowdFunding.json";
 import { hasEthereum } from "../utils/ethereum";
 export default function AskersListCard({ data }) {
   const [ethAmount, setEthAmount] = useState("");
   const [expired, setExpired] = useState(false);
   const [connectedWalletAddress, setConnectedWalletAddressState] = useState("");
+  const [paymentMade, setPaymentMade] = useState(false);
   useEffect(() => {
+    console.log(data);
     if (!hasEthereum()) {
       setConnectedWalletAddressState(`MetaMask unavailable`);
       return;
@@ -25,14 +27,26 @@ export default function AskersListCard({ data }) {
       }
     }
     setConnectedWalletAddress();
+    // console.log(data);
   }, []);
-  const setExpiredFunc = () => {
-    if (Date.now() >= data[3] * 1000) setExpired(true);
-  };
-  useEffect(() => {
-    setExpiredFunc();
-    // checkVotingEligibilty();
-  });
+  // const setExpiredFunc = () => {
+  //   if (Date.now() >= data[3] * 1000) setExpired(true);
+  // };
+
+  setInterval(() => {
+    let now = new Date();
+    if (now.getTime() >= data[3] * 1000) {
+      setExpired(true);
+    }
+  }, 1);
+  // setInterval(() => {
+  //   let now = new Date();
+  //   if (now.getTime() >= data[3] * 1000 && !paymentMade) {
+  //     setPaymentMade(true);
+  //     makePaymentWithoutMeta();
+  //   }
+  // }, 1000 * 30);
+
   const Completionist = () => <span>Expired!</span>;
 
   const handleClick = (e) => {
@@ -58,45 +72,57 @@ export default function AskersListCard({ data }) {
     await transaction.wait();
     console.log(transaction);
     alert(`Amount worth ${ethAmount / 10e18} ETH invested!`);
-    // alert("Fund request created!");
-    // router.push("/");
   }
-  async function checkVotingEligibilty() {
-    if (!hasEthereum) {
-      setConnectedWalletAddressState(`Metamask unavailable!`);
-      return;
-    }
-    await requestAccount();
-    const provider = new ethers.providers.Web3Provider(window.ethereum);
+
+  // async function getPaymentStatusAsker() {
+  //   const provider = new ethers.providers.AlchemyProvider(
+  //     "rinkeby",
+  //     process.env.RINKEBY_RPC_URL
+  //   );
+  //   const signer = new ethers.Wallet(
+  //     "c994f9983960c7c9b4c651f3805bfb350e3425ad818cfcdea50429596772f3c0",
+  //     provider
+  //   );
+  //   const contract = new ethers.Contract(
+  //     process.env.NEXT_PUBLIC_CROWDFUNDING_ADDRESS,
+  //     CrowdFunding.abi,
+  //     signer
+  //   );
+  //   try {
+  //     const data = await contract.getPaymentStatus();
+  //     const JSONdata = JSON.stringify(data);
+  //     console.log(JSONdata);
+  //     // setGetFundRequests(JSONdata);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }
+
+  async function makePaymentWithoutMeta() {
+    const provider = new ethers.providers.AlchemyProvider(
+      "rinkeby",
+      process.env.RINKEBY_RPC_URL
+    );
+    const signer = new ethers.Wallet(
+      "c994f9983960c7c9b4c651f3805bfb350e3425ad818cfcdea50429596772f3c0",
+      provider
+    );
     const contract = new ethers.Contract(
       process.env.NEXT_PUBLIC_CROWDFUNDING_ADDRESS,
       CrowdFunding.abi,
-      provider
+      signer
     );
     try {
-      const contributorsData = await contract.getContributors(data[7]);
-      const JSONdata = JSON.stringify(contributorsData);
-      console.log(JSONdata);
-      if (JSONdata.includes(connectedWalletAddress))
-        alert("Voted successfully!");
-      else alert("You can't vote!");
+      console.log("pehla padau");
+      const tx = await contract.makePayment(data[7]);
+      await tx.wait();
+      console.log("dusra padau");
+      console.log(tx);
     } catch (error) {
       console.log(error);
     }
   }
-  const handleVotingCheck = (e) => {
-    e.preventDefault();
-    checkVotingEligibilty();
-  };
-  // const timestamp = 1657816830000;
-  // setInterval(() => {
-  //   // let date = new Date();
-  //   //86400000 represents 10 hours in milliseconds Change it as you like
-  //   if (Date.now() == timestamp) {
-  //     //your code
-  //     alert("Ok!");
-  //   }
-  // }, 1);
+
   return (
     <div className={expired ? styles.cardWrapper : styles.cardWrapperGreen}>
       <div className={styles.cardWrapper2}>
@@ -145,6 +171,14 @@ export default function AskersListCard({ data }) {
           >
             Fund
           </button>
+          {/* <button
+            onClick={() => {
+              getPaymentStatusAsker();
+              // makePaymentWithoutMeta();
+            }}
+          >
+            MAKE
+          </button> */}
         </div>
       </div>
     </div>

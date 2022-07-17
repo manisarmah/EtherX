@@ -1,0 +1,27 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@100&display=swap');
+.logoutNav{
+    width: 100vw;
+    background-color: rgba(255, 115, 0, 0.838);
+    height: 10vh;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding-right: 2rem;
+}
+.logoutNav button{
+    background-color: rgb(19, 219, 22);
+    padding: 0.3rem 0.6rem;
+    border-radius: 0.5rem;
+    color:white;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+
+}
+.allCards{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding: 2rem;
+    flex-wrap: wrap;
+    background-color: rgb(221, 211, 226);
+}

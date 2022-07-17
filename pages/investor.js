@@ -90,6 +90,7 @@ export default function Investor() {
         {getFundRequest
           ? dataAll(getFundRequest).map(function (data, idx) {
               data.push(idx);
+              // data.push(false);
               return <AskersListCard key={idx} data={data} />;
             })
           : `No requests yet!`}
