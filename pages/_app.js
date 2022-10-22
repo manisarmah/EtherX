@@ -3,8 +3,8 @@ import { MoralisProvider, useMoralis } from "react-moralis";
 function MyApp({ Component, pageProps }) {
   return (
     <MoralisProvider
-      appId="20yPHbwCEzU6BuIo3qY739q6ekOhIGOuyVN3xHKB"
-      serverUrl="https://fhcrivr8islj.usemoralis.com:2053/server"
+      appId="THMRpAqVEixYJ2l3zg8Gd8BPafQNcK712QHuSJZX"
+      serverUrl="https://3xqncbzw60nj.grandmoralis.com:2053/server"
     >
       <Component {...pageProps} />
     </MoralisProvider>

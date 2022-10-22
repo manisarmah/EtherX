@@ -3,6 +3,7 @@ pragma solidity >=0.5.0 <0.9.0;
 
 contract CrowdFunding {
     address public manager;
+    address public manish;
     uint256 public minimumContribution;
     mapping(uint256 => uint256) public raisedAmount;
     mapping(uint256 => uint256) public noOfContributors;

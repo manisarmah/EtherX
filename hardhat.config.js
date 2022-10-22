@@ -26,9 +26,9 @@ module.exports = {
     hardhat: {
       chainId: +process.env.HARDHAT_CHAIN_ID || 1337,
     },
-    rinkeby: {
-      url: process.env.RINKEBY_RPC_URL,
-      accounts: [process.env.RINKEBY_PRIVATE_KEY],
+    goerli: {
+      url: process.env.GOERLI_RPC_URL,
+      accounts: [process.env.GOERLI_PRIVATE_KEY],
     },
   },
   etherscan: {
